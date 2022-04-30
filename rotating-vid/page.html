@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <style type="text/css">
+        body {
+            background-color: #121212;
+        }
+
+        #vid {
+            margin: auto;
+            display: block;
+        }
+
+        #preview table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #video {
+            box-shadow: 0px 0px 10px 5px rgb(182, 181, 174);
+            width: 500px;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+            margin-bottom: auto;
+            display: block;
+        }
+
+        .button {
+            height: 50px;
+            width: 100px;
+            font-size: 20px;
+            font-style: "color: white";
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #9691a3;
+            border: 2px whitesmoke 5%;
+            border-radius: 10%;
+            margin: auto;
+            display: block;
+        }
+
+        td {
+            padding: 3px;
+        }
+
+        img {
+            max-width: 100px;
+        }
+
+        img#unselected {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            filter: grayscale(100%);
+            opacity: 50%;
+        }
+
+        img#selected {
+            outline: none;
+            border-color: #ede19c;
+            box-shadow: 0 0 10px #ede19c;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="vid">
+        <video id="video" controls="false" autoplay="true"></video>
+        <br /><br />
+        <input type="button" class="button" id="btn_vid" value="Restart" />
+    </div>
+    <div id="preview">
+        <table>
+            <tr>
+                <td id="col_0_0"></td>
+                <td id="col_0_1"></td>
+                <td id="col_0_2"></td>
+                <td id="col_0_3"></td>
+                <td id="col_0_4"></td>
+            </tr>
+            <tr id="row_1">
+                <td id="col_1_0"></td>
+                <td id="col_1_1"></td>
+                <td id="col_1_2"></td>
+                <td id="col_1_3"></td>
+                <td id="col_1_4"></td>
+            </tr>
+            <tr id="row_2">
+                <td id="col_2_0"></td>
+                <td id="col_2_1"></td>
+                <td id="col_2_2"></td>
+                <td id="col_2_3"></td>
+                <td id="col_2_4"></td>
+            </tr>
+        </table>
+        <input type="button" class="button" id="btn_preview" value="Watch" />
+    </div>
+    <script src="C:/code/rotating-vid/script.js"></script>
+</body>
+
+</html>
