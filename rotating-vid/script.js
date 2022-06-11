@@ -1,5 +1,5 @@
 const VIDEOS_PER_ROUND = 3;
-const VIDEO_LOCATION = String.raw`file://c:\code\rotating-vid\vids`;
+const VIDEO_LOCATION = String.raw`file://c:\code\kami-project\rotating-vid\vids`;
 const VIDEOS_PER_CATEGORY = 3;
 const AMOUNT_OF_CATEGORIES = 5;
 
@@ -13,13 +13,6 @@ function getVideoPath(index) {
     return VIDEO_LOCATION + "\\" + index + "-" + getVideoNumber(index) + ".mp4";
 }
 
-function advanceVideo(video, index, play = true) {
-    video.src = getVideoPath(index);
-    if (play) {
-        video.play();
-    }
-}
-
 function resetSelectedVids() {
     // Random: See https://www.w3schools.com/js/js_random.asp
     for (let index = 0; index < selected_vids.length; index++) {
@@ -27,68 +20,56 @@ function resetSelectedVids() {
     }
 }
 
-function initPreview() {
-    for (let col_index = 0; col_index < AMOUNT_OF_CATEGORIES; col_index++) {
-        for (let row_index = 0; row_index < VIDEOS_PER_CATEGORY; row_index++) {
-            let current_id = (col_index + 1) + "-" + (row_index + 1);
-            let cell = document.getElementById("col_" + row_index + "_" + col_index);
-            cell.innerHTML = "<img src=previews\\" + current_id + ".png alt=imagealt />"
-        }
-    }
-}
-function previewMain() {
-    resetSelectedVids();
-    // Move to function of a button
-    for (let col_index = 0; col_index < AMOUNT_OF_CATEGORIES; col_index++) {
-        for (let row_index = 0; row_index < VIDEOS_PER_CATEGORY; row_index++) {
-            let cell = document.getElementById("col_" + row_index + "_" + col_index);
-            let inner_img = cell.getElementsByTagName("img")[0];
-            if (row_index == selected_vids[col_index]) {
-                inner_img.id = "selected";
-            } else {
-                inner_img.id = "unselected";
-            }
-        }
-    }
-}
-
 function toggleDivDisplay(div_id, hidden = true) {
     document.getElementById(div_id).style.display = hidden ? "none" : "block";
 }
 
+function setupVideos() {
+    resetSelectedVids();
+    for (let vid_index = 0; vid_index < AMOUNT_OF_CATEGORIES; vid_index++) {
+        toggleDivDisplay("vid"+vid_index, hidden=true);
+        let vid = document.getElementById("vid"+vid_index);
+        let selected_video = getVideoPath(vid_index);
+        console.log("index is " + vid_index)
+        console.log("setting video from path " + selected_video);
+        vid.src = selected_video;
+        vid.onended = onVideoEnds;
+        vid.preload = "auto";
+    }
+}
+
+function onVideoEnds(event) {
+    index = event.srcElement.id[3];
+    console.log('video ' + index + ' ended.');
+    toggleDivDisplay("vid"+index, hidden=true);
+    index++;
+    if (index < AMOUNT_OF_CATEGORIES) {
+        toggleDivDisplay("vid"+index, hidden=false);
+        document.getElementById("vid"+index).play();
+    } else {
+        console.log("done");
+    }
+}
+
 function mainVideo() {
     console.log("main started");
-    var video = document.getElementById("video");
-    let i = 1;
-    advanceVideo(video, i, play = false);
-    video.addEventListener('ended', (event) => {
-        console.log('video stopped.');
-        i = i + 1;
-        if (i <= VIDEOS_PER_ROUND) {
-            advanceVideo(video, i);
-        } else {
-            console.log("done");
-        }
-    });
+    // set all vids
+    // add listener on stop to hide and show next
+    // preload all vids
+    // show first
+    toggleDivDisplay('vid0', hidden=false);
+    video = document.getElementById('vid0');
+    video.muted = false;
+    video.play();
 }
 
 function stopVideo() {
-    var video = document.getElementById("video")
+    var video = document.getElementById("vid1")
     video.pause();
     video.currentTime = 0;
 }
 
 let selected_vids = [0, 0, 0, 0, 0];
-initPreview();
-previewMain();
-toggleDivDisplay("vid", true);
-document.getElementById('btn_preview').addEventListener("click", (_) => {
-    toggleDivDisplay("preview", true);
-    toggleDivDisplay("vid", false);
-    mainVideo();
-}); document.getElementById('btn_vid').addEventListener("click", (_) => {
-    toggleDivDisplay("preview", false);
-    toggleDivDisplay("vid", true);
-    stopVideo();
-    previewMain();
-});
+//toggleDivDisplay("vid", true);
+setupVideos();
+mainVideo();
