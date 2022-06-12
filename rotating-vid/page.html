@@ -18,11 +18,12 @@
 
         .video {
             box-shadow: 0px 0px 10px 5px rgb(182, 181, 174);
-            width: 500px;
-            padding: 20px;
+            height: 100%;
+            width: 100%;
+            /* padding: 20px; */
             margin-left: auto;
             margin-right: auto;
-            margin-top: 30px;
+            /* margin-top: 30px; */
             margin-bottom: auto;
             display: block;
         }
@@ -63,16 +64,27 @@
             box-shadow: 0 0 10px #ede19c;
 
         }
+
+        #timer {
+            position: absolute;
+            z-index: 2;
+            color:white;
+            left: 15%;
+            bottom: 5%;
+            font-size: 26px;
+        }
     </style>
 </head>
 
 <body>
     <div id="vid">
-        <video class="video" id="vid0" controls="false"></video>
-        <video class="video" id="vid1" controls="false"></video>
-        <video class="video" id="vid2" controls="false"></video>
-        <video class="video" id="vid3" controls="false"></video>
-        <video class="video" id="vid4" controls="false"></video>
+        <video class="video" id="vid0" ></video>
+        <video class="video" id="vid1" ></video>
+        <video class="video" id="vid2" ></video>
+        <video class="video" id="vid3" ></video>
+        <video class="video" id="vid4" ></video>
+    </div>
+    <div id="timer">
     </div>
     <script src="C:/code/kami-project/rotating-vid/script.js"></script>
 </body>
