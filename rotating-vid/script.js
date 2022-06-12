@@ -88,8 +88,11 @@ function onVideoEnds(event) {
         console.log("done");
         clearInterval(interval_id);
         document.getElementById("timer").innerHTML = "";
+        setupVideos();
+        //startVideos();
     }
 }
+
 
 function mainVideo() {
     console.log("main started");
@@ -103,10 +106,20 @@ function mainVideo() {
     video.play();
 }
 
-let selected_vids = [0, 0, 0, 0, 0];
-//toggleDivDisplay("vid", true);
-setupVideos();
-document.getElementById("vid" + (AMOUNT_OF_CATEGORIES - 1)).addEventListener("canplaythrough", (event) => {
+function startVideos() {
+    toggleDivDisplay("opener", hidden=false);
+    setTimeout(() => {
+    toggleDivDisplay("opener", hidden=true);
     mainVideo();
     startTimer();
-});
+    }, 3000);
+}
+
+let selected_vids = [0, 0, 0, 0, 0];
+//toggleDivDisplay("vid", true);
+function main() {
+    setupVideos();
+    document.getElementById("vid" + (AMOUNT_OF_CATEGORIES - 1)).addEventListener("canplaythrough", (event) => {startVideos();});
+}
+
+main();
