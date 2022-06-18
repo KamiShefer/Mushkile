@@ -31,7 +31,7 @@ function startTimer() {
         // Time calculations for days, hours, minutes and seconds
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        var milliseconds = Math.floor(distance);
+        var milliseconds = distance % 1000;
 
         // Output the result in an element with id="demo"
         document.getElementById("timer").innerHTML = formatTime(minutes) + ":" + formatTime(seconds) + ":" + formatTime(milliseconds);
@@ -39,8 +39,6 @@ function startTimer() {
 }
 
 function getVideoNumber(index) {
-    // Videos start from 1 to VIDEOS_PER_CATEGORY
-    // NOTE - temporarily, only 2 videos supported...
     return selected_vids[index];
 }
 
@@ -65,11 +63,20 @@ function calculateMovieLength() {
         totalSeconds += VIDEO_LENGTHS_IN_SECONDS[index][selected_vids[index]];
     }
 
-    return formatTime(Math.floor(totalSeconds/60)) + ":" + formatTime(totalSeconds % 60) + ":00";
+    return formatTime(Math.floor(totalSeconds / 60)) + ":" + formatTime(totalSeconds % 60) + ":00";
 }
 
 function toggleDivDisplay(div_id, hidden = true) {
     document.getElementById(div_id).style.display = hidden ? "none" : "block";
+}
+
+function saySomething(sentence, callback) {
+    let spoken = new SpeechSynthesisUtterance(sentence);
+    if (callback) {
+        spoken.addEventListener("end", callback);
+    }
+    spoken.lang = "he";
+    speechSynthesis.speak(spoken);
 }
 
 function setupVideos() {
@@ -103,7 +110,7 @@ function onVideoEnds(event) {
 }
 
 function mainOpener() {
-    toggleDivDisplay("opener", hidden=false);
+    toggleDivDisplay("opener", hidden = false);
     dropWriteUpper(startVideos);
 }
 
@@ -115,19 +122,22 @@ function mainVideo() {
 }
 
 function dropWriteUpper(callback) {
-    
+    let text = "סרט מספר " + calculateMovieId();
+    saySomething(text);
     dropWriteString(
         document.getElementById("upperText"),
-        "סרט מספר " + calculateMovieId(),
-        () => {dropWriteLower(callback)}
+        text,
+        () => { dropWriteLower(callback) }
     );
 }
 
 function dropWriteLower(callback) {
+    let text = "אורך הסרט\n" + calculateMovieLength() + "\nמתוך\n07:30:17";
+    saySomething(text, callback);
     dropWriteString(
         document.getElementById("lowerText"),
-        "אורך הסרט\n"+ calculateMovieLength() + "\nמתוך\n07:30:17",
-        callback
+        text,
+        undefined
     );
 }
 
@@ -135,10 +145,12 @@ let drop_write_interval_id;
 function dropWriteString(element, data, callback) {
     let i = 0;
     drop_write_interval_id = setInterval(() => {
-        if (i==data.length) {
+        if (i == data.length) {
             console.log("dropwrite done");
             clearInterval(drop_write_interval_id);
-            callback();
+            if (callback) {
+                callback();
+            }
             return;
         }
         let charToAdd = data[i];
@@ -157,17 +169,17 @@ function clearOpenerTexts() {
 
 function startVideos() {
     setTimeout(() => {
-    toggleDivDisplay("opener", hidden=true);
-    mainVideo();
-    startTimer();
-    clearOpenerTexts();
+        toggleDivDisplay("opener", hidden = true);
+        mainVideo();
+        startTimer();
+        clearOpenerTexts();
     }, 3000);
 }
 
 function main() {
     console.log("main started");
     setupVideos();
-    document.getElementById("vid0").addEventListener("canplaythrough", () => {mainOpener();});
+    document.getElementById("vid0").addEventListener("canplaythrough", () => { mainOpener(); });
 }
 
 main();

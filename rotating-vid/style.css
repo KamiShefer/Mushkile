@@ -25,7 +25,7 @@ body {
 }
 
 #opener {
-    color: white;
+    color: #abbfcd;
     margin-top: 123.33px;
     margin-bottom: 0px;
     margin-right: 340px;
@@ -39,10 +39,6 @@ body {
     box-sizing: border-box;
     padding-top: 70px;
     height: 166.67px;
-}
-
-#lowerText {
-
 }
 
 #roulette {
