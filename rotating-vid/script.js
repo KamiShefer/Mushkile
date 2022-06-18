@@ -1,12 +1,9 @@
 // If autoplay doesn't work - Install edge, go to browser settings and change autoplay to allowed.
 // This can also be done directly via prefs in Chrome.
 
-const VIDEOS_PER_ROUND = 3;
-const VIDEO_LOCATION = String.raw`file://c:\code\kami-project\rotating-vid\vids`;
-const VIDEOS_PER_CATEGORY = 3;
-const AMOUNT_OF_CATEGORIES = 5;
-
+let selected_vids = [0, 0, 0, 0];
 let interval_id;
+let interval_stop_value;
 
 function formatTime(timeRepr) {
     timeRepr = timeRepr.toString();
@@ -44,7 +41,7 @@ function startTimer() {
 function getVideoNumber(index) {
     // Videos start from 1 to VIDEOS_PER_CATEGORY
     // NOTE - temporarily, only 2 videos supported...
-    return (selected_vids[index] % 2) + 1;
+    return selected_vids[index];
 }
 
 function getVideoPath(index) {
@@ -56,6 +53,19 @@ function resetSelectedVids() {
     for (let index = 0; index < selected_vids.length; index++) {
         selected_vids[index] = Math.floor(Math.random() * VIDEOS_PER_CATEGORY);
     }
+}
+
+function calculateMovieId() {
+    return selected_vids.reduce((partialSum, a) => partialSum + a, 0);
+}
+
+function calculateMovieLength() {
+    let totalSeconds = 0;
+    for (let index = 0; index < selected_vids.length; index++) {
+        totalSeconds += VIDEO_LENGTHS_IN_SECONDS[index][selected_vids[index]];
+    }
+
+    return formatTime(Math.floor(totalSeconds/60)) + ":" + formatTime(totalSeconds % 60) + ":00";
 }
 
 function toggleDivDisplay(div_id, hidden = true) {
@@ -89,37 +99,75 @@ function onVideoEnds(event) {
         clearInterval(interval_id);
         document.getElementById("timer").innerHTML = "";
         setupVideos();
-        //startVideos();
     }
 }
 
+function mainOpener() {
+    toggleDivDisplay("opener", hidden=false);
+    dropWriteUpper(startVideos);
+}
 
 function mainVideo() {
-    console.log("main started");
-    // set all vids
-    // add listener on stop to hide and show next
-    // preload all vids
-    // show first
     toggleDivDisplay('vid0', hidden = false);
     video = document.getElementById('vid0');
     video.muted = false;
     video.play();
 }
 
+function dropWriteUpper(callback) {
+    
+    dropWriteString(
+        document.getElementById("upperText"),
+        "סרט מספר " + calculateMovieId(),
+        () => {dropWriteLower(callback)}
+    );
+}
+
+function dropWriteLower(callback) {
+    dropWriteString(
+        document.getElementById("lowerText"),
+        "אורך הסרט\n"+ calculateMovieLength() + "\nמתוך\n07:30:17",
+        callback
+    );
+}
+
+let drop_write_interval_id;
+function dropWriteString(element, data, callback) {
+    let i = 0;
+    drop_write_interval_id = setInterval(() => {
+        if (i==data.length) {
+            console.log("dropwrite done");
+            clearInterval(drop_write_interval_id);
+            callback();
+            return;
+        }
+        let charToAdd = data[i];
+        if (charToAdd == '\n') {
+            charToAdd = "<br />"
+        }
+        element.innerHTML += charToAdd;
+        i++;
+    }, 175);
+}
+
+function clearOpenerTexts() {
+    document.getElementById("upperText").innerHTML = ""
+    document.getElementById("lowerText").innerHTML = ""
+}
+
 function startVideos() {
-    toggleDivDisplay("opener", hidden=false);
     setTimeout(() => {
     toggleDivDisplay("opener", hidden=true);
     mainVideo();
     startTimer();
+    clearOpenerTexts();
     }, 3000);
 }
 
-let selected_vids = [0, 0, 0, 0, 0];
-//toggleDivDisplay("vid", true);
 function main() {
+    console.log("main started");
     setupVideos();
-    document.getElementById("vid" + (AMOUNT_OF_CATEGORIES - 1)).addEventListener("canplaythrough", (event) => {startVideos();});
+    document.getElementById("vid0").addEventListener("canplaythrough", () => {mainOpener();});
 }
 
 main();

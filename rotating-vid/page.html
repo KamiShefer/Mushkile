@@ -1,101 +1,29 @@
-<html>
+<html lang="he">
 
 <head>
-    <style type="text/css">
-        body {
-            background-color: #121212;
-        }
-
-        #vid {
-            margin: auto;
-            display: block;
-        }
-
-        #preview table {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .video {
-            box-shadow: 0px 0px 10px 5px rgb(182, 181, 174);
-            height: 100%;
-            width: 100%;
-            /* padding: 20px; */
-            margin-left: auto;
-            margin-right: auto;
-            /* margin-top: 30px; */
-            margin-bottom: auto;
-            display: block;
-        }
-
-        .button {
-            height: 50px;
-            width: 100px;
-            font-size: 20px;
-            font-style: "color: white";
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            background-color: #9691a3;
-            border: 2px whitesmoke 5%;
-            border-radius: 10%;
-            margin: auto;
-            display: block;
-        }
-
-        td {
-            padding: 3px;
-        }
-
-        img {
-            max-width: 100px;
-        }
-
-        img#unselected {
-            -webkit-filter: grayscale(100%);
-            -moz-filter: grayscale(100%);
-            -o-filter: grayscale(100%);
-            -ms-filter: grayscale(100%);
-            filter: grayscale(100%);
-            opacity: 50%;
-        }
-
-        img#selected {
-            outline: none;
-            border-color: #ede19c;
-            box-shadow: 0 0 10px #ede19c;
-
-        }
-
-        #timer {
-            position: absolute;
-            z-index: 2;
-            color:white;
-            left: 15%;
-            bottom: 5%;
-            font-size: 26px;
-        }
-
-        #opener {
-            font-size: 40px;
-            color: white;
-            margin-top: 50%;
-            text-align: center;
-        }
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="opener">
-        <h1>Opener!</h1>
+        <div id="roulette">
+            Opener!
+        </div>
+        <div id="upperText"></div>
+        <div id="lowerText">
+        </div>
     </div>
     <div id="vid">
-        <video class="video" id="vid0" ></video>
-        <video class="video" id="vid1" ></video>
-        <video class="video" id="vid2" ></video>
-        <video class="video" id="vid3" ></video>
-        <video class="video" id="vid4" ></video>
+        <video class="video" id="vid0"></video>
+        <video class="video" id="vid1"></video>
+        <video class="video" id="vid2"></video>
+        <video class="video" id="vid3"></video>
+        <video class="video" id="vid4"></video>
     </div>
     <div id="timer">
     </div>
+    <script src="C:/code/kami-project/rotating-vid/consts.js"></script>
     <script src="C:/code/kami-project/rotating-vid/script.js"></script>
 </body>
 
