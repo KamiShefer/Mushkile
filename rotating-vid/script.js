@@ -63,7 +63,7 @@ function calculateMovieLength() {
         totalSeconds += VIDEO_LENGTHS_IN_SECONDS[index][selected_vids[index]];
     }
 
-    return formatTime(Math.floor(totalSeconds / 60)) + ":" + formatTime(totalSeconds % 60) + ":00";
+    return { "minutes": formatTime(Math.floor(totalSeconds / 60)), "seconds": formatTime(totalSeconds % 60) };
 }
 
 function toggleDivDisplay(div_id, hidden = true) {
@@ -76,6 +76,7 @@ function saySomething(sentence, callback) {
         spoken.addEventListener("end", callback);
     }
     spoken.lang = "he";
+    spoken.rate = 0.85;
     speechSynthesis.speak(spoken);
 }
 
@@ -132,11 +133,15 @@ function dropWriteUpper(callback) {
 }
 
 function dropWriteLower(callback) {
-    let text = "אורך הסרט\n" + calculateMovieLength() + "\nמתוך\n07:30:17";
-    saySomething(text, callback);
+    let movieLength = calculateMovieLength();
+
+    let textToDisplay = "אורך הסרט\n" + movieLength.minutes + ":" + movieLength.seconds + ":00\nמתוך\n07:30:17";
+    let minutesPronoun = movieLength.minutes == 1 ? " דקה אחת" : movieLength.minutes + "דקות ";
+    let textToSay = "אורך הסרט" + minutesPronoun + " ו" + movieLength.seconds + "שניות מתוך 07 דקות ו30 שניות";
+    saySomething(textToSay, callback);
     dropWriteString(
         document.getElementById("lowerText"),
-        text,
+        textToDisplay,
         undefined
     );
 }
@@ -159,7 +164,7 @@ function dropWriteString(element, data, callback) {
         }
         element.innerHTML += charToAdd;
         i++;
-    }, 175);
+    }, 120);
 }
 
 function clearOpenerTexts() {

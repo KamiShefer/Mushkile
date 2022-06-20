@@ -18,30 +18,30 @@ body {
     position: absolute;
     z-index: 2;
     color:white;
-    left: 60px;
-    bottom: 63.33px;
-    font-size: 45.33px;
+    left: 90px;
+    bottom: 95px;
+    font-size: 68px;
     font-family: 'Courier New', Courier, monospace;
 }
 
 #opener {
     color: #abbfcd;
-    margin-top: 123.33px;
+    margin-top: 185px;
     margin-bottom: 0px;
-    margin-right: 340px;
+    margin-right: 510px;
     text-align: right;
-    font-size: 22px;
+    font-size: 33px;
     font-family: 'Courier New', Courier, monospace;
-    line-height: 34.67px;
+    line-height: 52px;
 }
 
 #upperText {
     box-sizing: border-box;
-    padding-top: 70px;
-    height: 166.67px;
+    padding-top: 105px;
+    height: 250px;
 }
 
 #roulette {
-    font-size: 70px;
+    font-size: 105px;
     font-weight: bold;
 }
