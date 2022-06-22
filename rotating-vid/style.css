@@ -14,10 +14,35 @@ body {
     display: none;
 }
 
+table {
+    /* margin-top: 185px; */
+    /* margin-left:510px; */
+    padding-left: 510px;
+}
+
+td {
+    overflow: hidden;
+    height: 200px;
+    align-content: center;
+    text-align: center;
+    /* margin: auto; */
+    width: 125px;
+    margin:auto;
+}
+img#nums {
+    display: none;
+    /* top: -100px; */
+    position: relative;
+    overflow: hidden;
+  }
+  img#nums.num1 {
+    display: inline-block;
+    /* top: 0px; */
+  }
 #timer {
     position: absolute;
     z-index: 2;
-    color:white;
+    color: white;
     left: 90px;
     bottom: 95px;
     font-size: 68px;

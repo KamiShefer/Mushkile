@@ -70,6 +70,14 @@ function toggleDivDisplay(div_id, hidden = true) {
     document.getElementById(div_id).style.display = hidden ? "none" : "block";
 }
 
+function toggleDivDisplaySelector(selector, hidden = true) {
+    if (hidden) {
+      $(selector).hide();
+    } else {
+      $(selector).show();
+    }
+}
+
 function saySomething(sentence, callback) {
     let spoken = new SpeechSynthesisUtterance(sentence);
     if (callback) {
@@ -112,7 +120,7 @@ function onVideoEnds(event) {
 
 function mainOpener() {
     toggleDivDisplay("opener", hidden = false);
-    dropWriteUpper(startVideos);
+    rouletteMain(function() {dropWriteUpper(startVideos)});
 }
 
 function mainVideo() {
@@ -172,13 +180,57 @@ function clearOpenerTexts() {
     document.getElementById("lowerText").innerHTML = ""
 }
 
+
+function roll(shown, col, endCallback) {
+    if (idStop < Number(col[col.length - 1]) || selected[col[col.length - 1]] != shown) {
+      $("div#" + col + " img.num" + shown).animate({ top: "-250px" }, speed = 150, callback=()=>{roll2(shown, col, endCallback)});
+    } else {
+        idStop++;
+      $("div#" + col + " img.num" + shown).animate({ top: "0" }, speed = 150, callback=endCallback);
+    }
+  }
+
+function roll2(shown, col, endCallback) {
+    toggleDivDisplaySelector("div#" + col + " img.num" + shown)
+    //$("div#" + col + " img.num" + shown).css('top', "200px");
+    shown = (shown + 1) % 10;
+    toggleDivDisplaySelector("div#" + col + " img.num" + shown, hidden=false);
+    $("div#" + col + " img.num" + shown).animate({ top: "250px" }, speed = 150, callback = function () { console.log("ok"); roll(shown, col, endCallback) });
+}
+
+let selected = [-1, -1, -1, -1, -1, -1]
+let idStop = -1;
+function rouletteMain(endCallback) {
+    let rouletteIntervalId;
+    let rollId = 0;
+    $(document).ready(function () {
+    rouletteIntervalId = setInterval(() => {
+        if (rollId == 6) {
+        clearInterval(rouletteIntervalId);
+        return;
+        }
+        let callback = function(){};
+        if (rollId == 5)
+            callback = endCallback;
+        roll(1, "col" + rollId, callback);
+        rollId++;
+    }
+        , 200);
+    setTimeout(() => { 
+        idStop = 0;
+        movieLength = calculateMovieLength();
+        selected = [movieLength.minutes[0], movieLength.minutes[1], movieLength.seconds[0], movieLength.seconds[1], 0, 0]; 
+    }, 3000);
+    });
+}
+
 function startVideos() {
     setTimeout(() => {
         toggleDivDisplay("opener", hidden = true);
         mainVideo();
         startTimer();
         clearOpenerTexts();
-    }, 3000);
+    }, 1500);
 }
 
 function main() {
