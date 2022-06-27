@@ -22,11 +22,12 @@ table {
 
 td {
     overflow: hidden;
-    height: 200px;
+    /* height: 200px; */
     align-content: center;
     text-align: center;
     /* margin: auto; */
-    width: 125px;
+    max-width: 105px;
+    min-width: 105px;
     margin:auto;
 }
 img#nums {

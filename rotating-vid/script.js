@@ -183,10 +183,10 @@ function clearOpenerTexts() {
 
 function roll(shown, col, endCallback) {
     if (idStop < Number(col[col.length - 1]) || selected[col[col.length - 1]] != shown) {
-      $("div#" + col + " img.num" + shown).animate({ top: "-250px" }, speed = 150, callback=()=>{roll2(shown, col, endCallback)});
+      $("div#" + col + " img.num" + shown).animate({ top: "-250px" }, speed = 120, callback=()=>{roll2(shown, col, endCallback)});
     } else {
         idStop++;
-      $("div#" + col + " img.num" + shown).animate({ top: "0" }, speed = 150, callback=endCallback);
+      $("div#" + col + " img.num" + shown).animate({ top: "0" }, speed = 120, callback=endCallback);
     }
   }
 
@@ -195,7 +195,7 @@ function roll2(shown, col, endCallback) {
     //$("div#" + col + " img.num" + shown).css('top', "200px");
     shown = (shown + 1) % 10;
     toggleDivDisplaySelector("div#" + col + " img.num" + shown, hidden=false);
-    $("div#" + col + " img.num" + shown).animate({ top: "250px" }, speed = 150, callback = function () { console.log("ok"); roll(shown, col, endCallback) });
+    $("div#" + col + " img.num" + shown).animate({ top: "250px" }, speed = 120, callback = function () { console.log("ok"); roll(shown, col, endCallback) });
 }
 
 let selected = [-1, -1, -1, -1, -1, -1]
