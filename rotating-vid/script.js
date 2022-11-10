@@ -2,8 +2,9 @@
 // This can also be done directly via prefs in Chrome.
 
 let selected_vids = [0, 0, 0, 0];
-let interval_id;
+let timer_interval_id;
 let interval_stop_value;
+let first_run = true;
 
 function formatTime(timeRepr) {
     timeRepr = timeRepr.toString();
@@ -16,26 +17,30 @@ function formatTime(timeRepr) {
     return '00';
 }
 
+function seperateTimePieces(timeInMs) {
+    var minutes = Math.floor((timeInMs % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((timeInMs % (1000 * 60)) / 1000);
+    var milliseconds = Math.floor(timeInMs % 1000 / 10); // Divide by 10 to get only 2 first digits
+    return {"minutes": formatTime(minutes), "seconds": formatTime(seconds), "milliseconds": formatTime(milliseconds)};
+}
+
 function startTimer() {
     // Set the date we're counting down to
     var countDownDate = new Date().getTime();
     // Update the count down every 1 second
-    interval_id = setInterval(function () {
+    timer_interval_id = setInterval(function () {
 
         // Get today's date and time
         var now = new Date().getTime();
 
         // Find the distance between now and the count down date
         var distance = now - countDownDate;
-
-        // Time calculations for days, hours, minutes and seconds
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        var milliseconds = distance % 1000;
+        var timePieces = seperateTimePieces(distance);
 
         // Output the result in an element with id="demo"
-        document.getElementById("timer").innerHTML = formatTime(minutes) + ":" + formatTime(seconds) + ":" + formatTime(milliseconds);
+        document.getElementById("timer").innerHTML = formatTime(timePieces["minutes"]) + ":" + formatTime(timePieces["seconds"]) + ":" + formatTime(timePieces["milliseconds"]);
     }, 100);
+    console.log("timer " + timer_interval_id)
 }
 
 function getVideoNumber(index) {
@@ -47,9 +52,14 @@ function getVideoPath(index) {
 }
 
 function resetSelectedVids() {
-    // Random: See https://www.w3schools.com/js/js_random.asp
-    for (let index = 0; index < selected_vids.length; index++) {
-        selected_vids[index] = Math.floor(Math.random() * VIDEOS_PER_CATEGORY);
+    if (first_run) {
+        selected_vids = [VIDEOS_PER_CATEGORY-1,VIDEOS_PER_CATEGORY-1,VIDEOS_PER_CATEGORY-1,VIDEOS_PER_CATEGORY-1];
+        first_run = false;
+    } else {
+        // Random: See https://www.w3schools.com/js/js_random.asp
+        for (let index = 0; index < selected_vids.length; index++) {
+            selected_vids[index] = Math.floor(Math.random() * VIDEOS_PER_CATEGORY);
+        }
     }
 }
 
@@ -58,12 +68,12 @@ function calculateMovieId() {
 }
 
 function calculateMovieLength() {
-    let totalSeconds = 0;
+    let totalMilliseconds = 0;
     for (let index = 0; index < selected_vids.length; index++) {
-        totalSeconds += VIDEO_LENGTHS_IN_SECONDS[index][selected_vids[index]];
+        totalMilliseconds += VIDEO_LENGTHS_IN_MILLISECONDS[index][selected_vids[index]];
     }
 
-    return { "minutes": formatTime(Math.floor(totalSeconds / 60)), "seconds": formatTime(totalSeconds % 60) };
+    return seperateTimePieces(totalMilliseconds);
 }
 
 function toggleDivDisplay(div_id, hidden = true) {
@@ -78,14 +88,15 @@ function toggleDivDisplaySelector(selector, hidden = true) {
     }
 }
 
-function saySomething(sentence, callback) {
-    let spoken = new SpeechSynthesisUtterance(sentence);
+function makeTypingSound(callback) {
+    let audioElement = document.getElementById("typing_short");
     if (callback) {
-        spoken.addEventListener("end", callback);
+        audioElement.addEventListener("ended", (event) => {
+            callback();
+        }, 
+        {"once": true});
     }
-    spoken.lang = "he";
-    spoken.rate = 0.85;
-    speechSynthesis.speak(spoken);
+    audioElement.play();
 }
 
 function setupVideos() {
@@ -112,7 +123,7 @@ function onVideoEnds(event) {
         document.getElementById("vid" + index).play();
     } else {
         console.log("done");
-        clearInterval(interval_id);
+        clearInterval(timer_interval_id);
         document.getElementById("timer").innerHTML = "";
         setupVideos();
     }
@@ -131,8 +142,9 @@ function mainVideo() {
 }
 
 function dropWriteUpper(callback) {
+    makeTypingSound();
+
     let text = "סרט מספר " + calculateMovieId();
-    saySomething(text);
     dropWriteString(
         document.getElementById("upperText"),
         text,
@@ -141,17 +153,15 @@ function dropWriteUpper(callback) {
 }
 
 function dropWriteLower(callback) {
-    let movieLength = calculateMovieLength();
+    makeTypingSound(callback);
 
-    let textToDisplay = "אורך הסרט\n" + movieLength.minutes + ":" + movieLength.seconds + ":00\nמתוך\n07:53:00";
-    let minutesPronoun = movieLength.minutes == 1 ? " דקה אחת" : movieLength.minutes + "דקות ";
-    let textToSay = "אורך הסרט" + minutesPronoun + " ו" + movieLength.seconds + "שניות מתוך 07 דקות ו53 שניות";
-    saySomething(textToSay, callback);
+    let movieLength = calculateMovieLength();
+    let textToDisplay = "אורך הסרט\n" + movieLength.minutes + ":" + movieLength.seconds + ":" + movieLength.milliseconds + "\nמתוך\n07:52:86";
     dropWriteString(
         document.getElementById("lowerText"),
         textToDisplay,
         undefined
-    );
+        );
 }
 
 let drop_write_interval_id;
@@ -229,7 +239,7 @@ function rouletteMain(endCallback) {
     setTimeout(() => { 
         idStop = 0;
         movieLength = calculateMovieLength();
-        selected = [movieLength.minutes[0], movieLength.minutes[1], movieLength.seconds[0], movieLength.seconds[1], 0, 0]; 
+        selected = [movieLength.minutes[0], movieLength.minutes[1], movieLength.seconds[0], movieLength.seconds[1], movieLength.milliseconds[0], movieLength.milliseconds[1]]; 
     }, 1500);
 }
 
@@ -240,7 +250,7 @@ function startVideos() {
         startTimer();
         clearOpenerTexts();
         restartImgs();
-    }, 1500);
+    }, 4000);
 }
 
 function main() {

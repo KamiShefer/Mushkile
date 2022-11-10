@@ -47,8 +47,8 @@ img#nums.num1 {
     position: absolute;
     z-index: 2;
     color: white;
-    left: 78px;
-    bottom: 115px;
+    left: 95px;
+    bottom: 85px;
     font-size: 60px;
     font-family: 'Courier New', Courier, monospace;
 }
