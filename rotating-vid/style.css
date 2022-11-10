@@ -28,7 +28,7 @@ td {
     /* margin: auto; */
     max-width: 105px;
     min-width: 105px;
-    margin:auto;
+    margin: auto;
 }
 
 img#nums {
@@ -36,11 +36,13 @@ img#nums {
     /* top: -100px; */
     position: relative;
     overflow: hidden;
-  }
-  img#nums.num1 {
+}
+
+img#nums.num1 {
     display: inline-block;
     top: 0px;
-  }
+}
+
 #timer {
     position: absolute;
     z-index: 2;
