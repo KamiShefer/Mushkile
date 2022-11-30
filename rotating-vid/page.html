@@ -1,126 +1,135 @@
 <html lang="he">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="style.css">
-    <script src="resources/jquery-3.6.0.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="style.css">
+  <script src="resources/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="resources/libgif-js/libgif.js"></script>
 </head>
 
 <body>
-    <div id="opener">
-            <table>
-                <tr>
-                  <td> 
-                    <div id="col0">
-                    <img id="nums" class="num0" src="numbers/0.png" />
-                    <img id="nums" class="num1" src="numbers/1.png" />
-                    <img id="nums" class="num2" src="numbers/2.png" />
-                    <img id="nums" class="num3" src="numbers/3.png" />
-                    <img id="nums" class="num4" src="numbers/4.png" />
-                    <img id="nums" class="num5" src="numbers/5.png" />
-                    <img id="nums" class="num6" src="numbers/6.png" />
-                    <img id="nums" class="num7" src="numbers/7.png" />
-                    <img id="nums" class="num8" src="numbers/8.png" />
-                    <img id="nums" class="num9" src="numbers/9.png" />
-                  </div>
-                </td>
-                <td>
-                  <div id="col1">
-                    <img id="nums" class="num0" src="numbers/0.png" />
-                    <img id="nums" class="num1" src="numbers/1.png" />
-                    <img id="nums" class="num2" src="numbers/2.png" />
-                    <img id="nums" class="num3" src="numbers/3.png" />
-                    <img id="nums" class="num4" src="numbers/4.png" />
-                    <img id="nums" class="num5" src="numbers/5.png" />
-                    <img id="nums" class="num6" src="numbers/6.png" />
-                    <img id="nums" class="num7" src="numbers/7.png" />
-                    <img id="nums" class="num8" src="numbers/8.png" />
-                    <img id="nums" class="num9" src="numbers/9.png" />
-                  </div>    
-                </td>
-                <td>
-                  <img src="numbers/dots.png" id="dots1" />
-                </td>
-                <td>
-                  <div id="col2">
-                    <img id="nums" class="num0" src="numbers/0.png" />
-                    <img id="nums" class="num1" src="numbers/1.png" />
-                    <img id="nums" class="num2" src="numbers/2.png" />
-                    <img id="nums" class="num3" src="numbers/3.png" />
-                    <img id="nums" class="num4" src="numbers/4.png" />
-                    <img id="nums" class="num5" src="numbers/5.png" />
-                    <img id="nums" class="num6" src="numbers/6.png" />
-                    <img id="nums" class="num7" src="numbers/7.png" />
-                    <img id="nums" class="num8" src="numbers/8.png" />
-                    <img id="nums" class="num9" src="numbers/9.png" />
-                  </div>
-                </td>
-                <td>
-                  <div id="col3">
-                    <img id="nums" class="num0" src="numbers/0.png" />
-                    <img id="nums" class="num1" src="numbers/1.png" />
-                    <img id="nums" class="num2" src="numbers/2.png" />
-                    <img id="nums" class="num3" src="numbers/3.png" />
-                    <img id="nums" class="num4" src="numbers/4.png" />
-                    <img id="nums" class="num5" src="numbers/5.png" />
-                    <img id="nums" class="num6" src="numbers/6.png" />
-                    <img id="nums" class="num7" src="numbers/7.png" />
-                    <img id="nums" class="num8" src="numbers/8.png" />
-                    <img id="nums" class="num9" src="numbers/9.png" />
-                  </div>    
-                </td>
-                <td>
-                  <img src="numbers/dots.png" id="dots2" />
-                </td>
-                <td>
-                  <div id="col4">
-                    <img id="nums" class="num0" src="numbers/0.png" />
-                    <img id="nums" class="num1" src="numbers/1.png" />
-                    <img id="nums" class="num2" src="numbers/2.png" />
-                    <img id="nums" class="num3" src="numbers/3.png" />
-                    <img id="nums" class="num4" src="numbers/4.png" />
-                    <img id="nums" class="num5" src="numbers/5.png" />
-                    <img id="nums" class="num6" src="numbers/6.png" />
-                    <img id="nums" class="num7" src="numbers/7.png" />
-                    <img id="nums" class="num8" src="numbers/8.png" />
-                    <img id="nums" class="num9" src="numbers/9.png" />
-                  </div>    
-                </td>
-                <td>
-                  <div id="col5">
-                    <img id="nums" class="num0" src="numbers/0.png" />
-                    <img id="nums" class="num1" src="numbers/1.png" />
-                    <img id="nums" class="num2" src="numbers/2.png" />
-                    <img id="nums" class="num3" src="numbers/3.png" />
-                    <img id="nums" class="num4" src="numbers/4.png" />
-                    <img id="nums" class="num5" src="numbers/5.png" />
-                    <img id="nums" class="num6" src="numbers/6.png" />
-                    <img id="nums" class="num7" src="numbers/7.png" />
-                    <img id="nums" class="num8" src="numbers/8.png" />
-                    <img id="nums" class="num9" src="numbers/9.png" />
-                  </div>    
-                </td>
-                </tr>
-              </table>
-        <div id="audios" hidden="true">
-          <audio src="resources/scifi_typing_short.mp3" id="typing_short" preload="auto"></audio>
-          <audio src="resources/scifi_typing_long.mp3" id="typing_long" preload="auto"></audio>
-        </div>
-        <div id="upperText"></div>
-        <div id="lowerText">
-        </div>
+  <div id="start_button_div", hidden="true">
+    <div id="start_button_unclicked">
+      <img id="start_button_unclicked_gif" onclick="buttonClicked()" src="resources/Start_BG.gif" rel:auto_play="0">start</button>
     </div>
-    <div id="vid">
-        <video class="video" id="vid0"></video>
-        <video class="video" id="vid1"></video>
-        <video class="video" id="vid2"></video>
-        <video class="video" id="vid3"></video>
-        <video class="video" id="vid4"></video>
+    <div id="start_button_clicked">
+      <img id="start_button_clicked_gif" src="resources/Start_click_BG.gif" rel:auto_play="0">start</button>
     </div>
-    <div id="timer">
+  </div>
+  <div id="opener" hidden>
+    <table>
+      <tr>
+        <td>
+          <div id="col0">
+            <img id="nums" class="num0" src="numbers/0.png" />
+            <img id="nums" class="num1" src="numbers/1.png" />
+            <img id="nums" class="num2" src="numbers/2.png" />
+            <img id="nums" class="num3" src="numbers/3.png" />
+            <img id="nums" class="num4" src="numbers/4.png" />
+            <img id="nums" class="num5" src="numbers/5.png" />
+            <img id="nums" class="num6" src="numbers/6.png" />
+            <img id="nums" class="num7" src="numbers/7.png" />
+            <img id="nums" class="num8" src="numbers/8.png" />
+            <img id="nums" class="num9" src="numbers/9.png" />
+          </div>
+        </td>
+        <td>
+          <div id="col1">
+            <img id="nums" class="num0" src="numbers/0.png" />
+            <img id="nums" class="num1" src="numbers/1.png" />
+            <img id="nums" class="num2" src="numbers/2.png" />
+            <img id="nums" class="num3" src="numbers/3.png" />
+            <img id="nums" class="num4" src="numbers/4.png" />
+            <img id="nums" class="num5" src="numbers/5.png" />
+            <img id="nums" class="num6" src="numbers/6.png" />
+            <img id="nums" class="num7" src="numbers/7.png" />
+            <img id="nums" class="num8" src="numbers/8.png" />
+            <img id="nums" class="num9" src="numbers/9.png" />
+          </div>
+        </td>
+        <td>
+          <img src="numbers/dots.png" id="dots1" />
+        </td>
+        <td>
+          <div id="col2">
+            <img id="nums" class="num0" src="numbers/0.png" />
+            <img id="nums" class="num1" src="numbers/1.png" />
+            <img id="nums" class="num2" src="numbers/2.png" />
+            <img id="nums" class="num3" src="numbers/3.png" />
+            <img id="nums" class="num4" src="numbers/4.png" />
+            <img id="nums" class="num5" src="numbers/5.png" />
+            <img id="nums" class="num6" src="numbers/6.png" />
+            <img id="nums" class="num7" src="numbers/7.png" />
+            <img id="nums" class="num8" src="numbers/8.png" />
+            <img id="nums" class="num9" src="numbers/9.png" />
+          </div>
+        </td>
+        <td>
+          <div id="col3">
+            <img id="nums" class="num0" src="numbers/0.png" />
+            <img id="nums" class="num1" src="numbers/1.png" />
+            <img id="nums" class="num2" src="numbers/2.png" />
+            <img id="nums" class="num3" src="numbers/3.png" />
+            <img id="nums" class="num4" src="numbers/4.png" />
+            <img id="nums" class="num5" src="numbers/5.png" />
+            <img id="nums" class="num6" src="numbers/6.png" />
+            <img id="nums" class="num7" src="numbers/7.png" />
+            <img id="nums" class="num8" src="numbers/8.png" />
+            <img id="nums" class="num9" src="numbers/9.png" />
+          </div>
+        </td>
+        <td>
+          <img src="numbers/dots.png" id="dots2" />
+        </td>
+        <td>
+          <div id="col4">
+            <img id="nums" class="num0" src="numbers/0.png" />
+            <img id="nums" class="num1" src="numbers/1.png" />
+            <img id="nums" class="num2" src="numbers/2.png" />
+            <img id="nums" class="num3" src="numbers/3.png" />
+            <img id="nums" class="num4" src="numbers/4.png" />
+            <img id="nums" class="num5" src="numbers/5.png" />
+            <img id="nums" class="num6" src="numbers/6.png" />
+            <img id="nums" class="num7" src="numbers/7.png" />
+            <img id="nums" class="num8" src="numbers/8.png" />
+            <img id="nums" class="num9" src="numbers/9.png" />
+          </div>
+        </td>
+        <td>
+          <div id="col5">
+            <img id="nums" class="num0" src="numbers/0.png" />
+            <img id="nums" class="num1" src="numbers/1.png" />
+            <img id="nums" class="num2" src="numbers/2.png" />
+            <img id="nums" class="num3" src="numbers/3.png" />
+            <img id="nums" class="num4" src="numbers/4.png" />
+            <img id="nums" class="num5" src="numbers/5.png" />
+            <img id="nums" class="num6" src="numbers/6.png" />
+            <img id="nums" class="num7" src="numbers/7.png" />
+            <img id="nums" class="num8" src="numbers/8.png" />
+            <img id="nums" class="num9" src="numbers/9.png" />
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div id="audios" hidden="true">
+      <audio src="resources/scifi_typing_short.mp3" id="typing_short" preload="auto"></audio>
+      <audio src="resources/scifi_typing_long.mp3" id="typing_long" preload="auto"></audio>
     </div>
-    <script src="consts.js"></script>
-    <script src="script.js"></script>
+    <div id="upperText"></div>
+    <div id="lowerText">
+    </div>
+  </div>
+  <div id="vid">
+    <video class="video" id="vid0"></video>
+    <video class="video" id="vid1"></video>
+    <video class="video" id="vid2"></video>
+    <video class="video" id="vid3"></video>
+    <video class="video" id="vid4"></video>
+  </div>
+  <div id="timer">
+  </div>
+  <script src="consts.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

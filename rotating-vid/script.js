@@ -5,6 +5,8 @@ let selected_vids = [0, 0, 0, 0];
 let timer_interval_id;
 let interval_stop_value;
 let first_run = true;
+let pre_click_gif = new SuperGif({gif: document.getElementById("start_button_unclicked_gif"), loop_mode: true, on_end: unClickedGifLoopEnd});
+let clicked_gif = new SuperGif({gif: document.getElementById("start_button_clicked_gif"), loop_mode: false, on_end: buttonClickedAnimationDone});
 
 function formatTime(timeRepr) {
     timeRepr = timeRepr.toString();
@@ -127,6 +129,44 @@ function onVideoEnds(event) {
         document.getElementById("timer").innerHTML = "";
         setupVideos();
     }
+}
+
+function preMain() {
+    pre_click_gif.load(() => {
+        console.log("pre click gif loaded")
+        clicked_gif.load(() => {
+            console.log("post click gif loaded")
+            shouldStop = false;
+            pre_click_gif.get_canvas().onclick = buttonClicked;
+            pre_click_gif.play();
+            toggleDivDisplay("start_button_unclicked", false);
+            toggleDivDisplay("start_button_clicked", true);
+            toggleDivDisplay("start_button_div", false)
+        })
+    });
+}
+
+function unClickedGifLoopEnd() {
+    if (shouldStop) {
+        console.log("should stop!")
+        pre_click_gif.pause();
+        clicked_gif.play();
+        toggleDivDisplay("start_button_unclicked", true);
+        toggleDivDisplay("start_button_clicked", false);
+    }
+}
+
+function buttonClicked() {
+    console.log("stop")
+    shouldStop = true;
+}
+
+function buttonClickedAnimationDone() {
+    console.log("clicked gif loop done")
+    clicked_gif.pause()
+    toggleDivDisplay("start_button_clicked", true);
+    toggleDivDisplay("start_button_div", true);
+    mainOpener();
 }
 
 function mainOpener() {
@@ -256,7 +296,7 @@ function startVideos() {
 function main() {
     console.log("main started");
     setupVideos();
-    document.getElementById("vid0").addEventListener("canplaythrough", () => { mainOpener(); });
+    document.getElementById("vid0").addEventListener("canplaythrough", () => { preMain(); });
 }
 
 main();
