@@ -6,8 +6,8 @@ const VIDEOS_PER_CATEGORY = 3;
 const AMOUNT_OF_CATEGORIES = 4;
 
 VIDEO_LENGTHS_IN_SECONDS = [
-    [10, 30, 40],
-    [11, 31, 41],
-    [12, 32, 42],
-    [13, 33, 43],
+    [54, 60, 76],
+    [49, 73, 104],
+    [54, 82, 108],
+    [128, 147, 185],
 ]

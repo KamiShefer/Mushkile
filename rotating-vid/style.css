@@ -30,6 +30,7 @@ td {
     min-width: 105px;
     margin:auto;
 }
+
 img#nums {
     display: none;
     /* top: -100px; */
@@ -38,15 +39,15 @@ img#nums {
   }
   img#nums.num1 {
     display: inline-block;
-    /* top: 0px; */
+    top: 0px;
   }
 #timer {
     position: absolute;
     z-index: 2;
     color: white;
-    left: 90px;
-    bottom: 95px;
-    font-size: 68px;
+    left: 78px;
+    bottom: 115px;
+    font-size: 60px;
     font-family: 'Courier New', Courier, monospace;
 }
 

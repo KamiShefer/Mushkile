@@ -143,9 +143,9 @@ function dropWriteUpper(callback) {
 function dropWriteLower(callback) {
     let movieLength = calculateMovieLength();
 
-    let textToDisplay = "אורך הסרט\n" + movieLength.minutes + ":" + movieLength.seconds + ":00\nמתוך\n07:30:17";
+    let textToDisplay = "אורך הסרט\n" + movieLength.minutes + ":" + movieLength.seconds + ":00\nמתוך\n07:53:00";
     let minutesPronoun = movieLength.minutes == 1 ? " דקה אחת" : movieLength.minutes + "דקות ";
-    let textToSay = "אורך הסרט" + minutesPronoun + " ו" + movieLength.seconds + "שניות מתוך 07 דקות ו30 שניות";
+    let textToSay = "אורך הסרט" + minutesPronoun + " ו" + movieLength.seconds + "שניות מתוך 07 דקות ו53 שניות";
     saySomething(textToSay, callback);
     dropWriteString(
         document.getElementById("lowerText"),
@@ -192,10 +192,19 @@ function roll(shown, col, endCallback) {
 
 function roll2(shown, col, endCallback) {
     toggleDivDisplaySelector("div#" + col + " img.num" + shown)
-    //$("div#" + col + " img.num" + shown).css('top', "200px");
     shown = (shown + 1) % 10;
     toggleDivDisplaySelector("div#" + col + " img.num" + shown, hidden=false);
-    $("div#" + col + " img.num" + shown).animate({ top: "250px" }, speed = 120, callback = function () { console.log("ok"); roll(shown, col, endCallback) });
+    $("div#" + col + " img.num" + shown).animate({ top: "250px" }, speed = 120, callback = function () { roll(shown, col, endCallback) });
+}
+
+function restartImgs() {
+    for (let col=0; col<selected.length; col++) {
+        for (let i=0; i<10; i++) {
+            toggleDivDisplaySelector("div#col" + col + " img.num" + i, hidden=true);
+            $("div#col" + col + " img.num" + i).css("top", "0");
+        }
+        toggleDivDisplaySelector("div#col" + col + " img.num" + 1, hidden=false);
+    }
 }
 
 let selected = [-1, -1, -1, -1, -1, -1]
@@ -203,7 +212,8 @@ let idStop = -1;
 function rouletteMain(endCallback) {
     let rouletteIntervalId;
     let rollId = 0;
-    $(document).ready(function () {
+    selected = [-1, -1, -1, -1, -1, -1]
+    idStop = -1;
     rouletteIntervalId = setInterval(() => {
         if (rollId == 6) {
         clearInterval(rouletteIntervalId);
@@ -220,8 +230,7 @@ function rouletteMain(endCallback) {
         idStop = 0;
         movieLength = calculateMovieLength();
         selected = [movieLength.minutes[0], movieLength.minutes[1], movieLength.seconds[0], movieLength.seconds[1], 0, 0]; 
-    }, 3000);
-    });
+    }, 1500);
 }
 
 function startVideos() {
@@ -230,6 +239,7 @@ function startVideos() {
         mainVideo();
         startTimer();
         clearOpenerTexts();
+        restartImgs();
     }, 1500);
 }
 
