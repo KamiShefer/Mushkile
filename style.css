@@ -1,0 +1,71 @@
+body {
+    overflow: hidden;
+    background-image: url("resources/BG.png");
+}
+
+#vid {
+    margin: auto;
+    display: block;
+}
+
+.video {
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+td {
+    overflow: hidden;
+    align-content: center;
+    text-align: center;
+    max-width: 79pt;
+    min-width: 79pt;
+    margin: 0 auto;
+}
+
+img#nums {
+    display: none;
+    position: relative;
+    overflow: hidden;
+}
+
+img#nums.num1 {
+    display: inline-block;
+    top: 0px;
+}
+
+#timer {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    left: 71pt;
+    bottom: 63pt;
+    font-size: 45pt;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#opener {
+    color: #abbfcd;
+    margin-top: 10%;
+    font-size: 25pt;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 39pt;
+    margin-left: 25%;
+    margin-right: 25%;
+    text-align: right;
+}
+
+#upperText {
+    box-sizing: border-box;
+    padding-top: 79pt;
+    height: 187pt;
+}
+
+#roulette {
+    font-size: 79pt;
+    font-weight: bold;
+}
+
+canvas {
+    width: 100%
+}
