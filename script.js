@@ -1,12 +1,16 @@
-// If autoplay doesn't work - Install edge, go to browser settings and change autoplay to allowed.
-// This can also be done directly via prefs in Chrome.
-
 let selected_vids = [0, 0, 0, 0];
 let timer_interval_id;
 let interval_stop_value;
 let first_run = true;
 let pre_click_gif = new SuperGif({gif: document.getElementById("start_button_unclicked_gif"), loop_mode: true, on_end: unClickedGifLoopEnd});
 let clicked_gif = new SuperGif({gif: document.getElementById("start_button_clicked_gif"), loop_mode: false, on_end: buttonClickedAnimationDone});
+
+// let VIDEO_URLS = [
+//     ["https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01"],
+//     ["https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01"],
+//     ["https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01"],
+//     ["https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01"],
+// ]
 
 function formatTime(timeRepr) {
     timeRepr = timeRepr.toString();
@@ -51,6 +55,7 @@ function getVideoNumber(index) {
 
 function getVideoPath(index) {
     return VIDEO_LOCATION + "\\" + index + "-" + getVideoNumber(index) + ".mp4";
+    // return VIDEO_URLS[index][getVideoNumber(index)];
 }
 
 function resetSelectedVids() {
@@ -300,4 +305,3 @@ function main() {
 }
 
 main();
-
