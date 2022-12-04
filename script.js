@@ -171,6 +171,7 @@ function buttonClickedAnimationDone() {
     clicked_gif.pause()
     toggleDivDisplay("start_button_clicked", true);
     toggleDivDisplay("start_button_div", true);
+    document.querySelector("body").requestFullscreen();
     mainOpener();
 }
 
