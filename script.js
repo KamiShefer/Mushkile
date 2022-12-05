@@ -137,6 +137,7 @@ function onVideoEnds(event) {
 }
 
 function preMain() {
+    if (pre_click_gif.get_canvas() === undefined) {
     pre_click_gif.load(() => {
         console.log("pre click gif loaded")
         clicked_gif.load(() => {
@@ -149,6 +150,16 @@ function preMain() {
             toggleDivDisplay("start_button_div", false)
         })
     });
+    } else {
+        shouldStop = false;
+        pre_click_gif.move_to(0);
+        clicked_gif.move_to(0);
+        pre_click_gif.play();
+        toggleDivDisplay("start_button_unclicked", false);
+        toggleDivDisplay("start_button_clicked", true);
+        toggleDivDisplay("start_button_div", false)
+    }
+
 }
 
 function unClickedGifLoopEnd() {
