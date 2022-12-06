@@ -14,13 +14,24 @@ body {
     display: none;
 }
 
+table {
+    margin-right: auto;
+    margin-left: auto;
+    table-layout: fixed;
+    width: 100%;
+}
+
 td {
     overflow: hidden;
-    align-content: center;
     text-align: center;
-    max-width: 79pt;
-    min-width: 79pt;
-    margin: 0 auto;
+}
+
+#opener img {
+    height: 9.5em;
+}
+
+#opener .dots {
+    height: 4.5em;
 }
 
 img#nums {
@@ -38,27 +49,30 @@ img#nums.num1 {
     position: absolute;
     z-index: 2;
     color: white;
-    left: 71pt;
-    bottom: 63pt;
+    left: 5%;
+    bottom: 10%;
     font-size: 45pt;
     font-family: 'Courier New', Courier, monospace;
 }
 
 #opener {
     color: #abbfcd;
-    margin-top: 10%;
+    margin-top: 5%;
     font-size: 25pt;
     font-family: 'Courier New', Courier, monospace;
     line-height: 39pt;
-    margin-left: 25%;
-    margin-right: 25%;
-    text-align: right;
+    margin-left: 23%;
+    margin-right: 23%;
 }
 
-#upperText {
-    box-sizing: border-box;
-    padding-top: 79pt;
-    height: 187pt;
+#dropdowntext {
+    margin-top: 5%;
+    text-align: right;
+    font-size: 1em;
+}
+
+#lowerText {
+    padding-top: 1.5em;
 }
 
 #roulette {
