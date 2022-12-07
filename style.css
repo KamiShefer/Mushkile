@@ -27,11 +27,13 @@ td {
 }
 
 #opener img {
-    height: 9.5em;
+    width: max-content;
+    max-width: 100%;
 }
 
 #opener .dots {
-    height: 4.5em;
+    width: max-content;
+    max-width: 50%;
 }
 
 img#nums {
@@ -51,13 +53,13 @@ img#nums.num1 {
     color: white;
     left: 5%;
     bottom: 10%;
-    font-size: 45pt;
+    font-size: 3.5em;
     font-family: 'Courier New', Courier, monospace;
 }
 
 #opener {
     color: #abbfcd;
-    margin-top: 5%;
+    margin-top: 8%;
     font-size: 25pt;
     font-family: 'Courier New', Courier, monospace;
     line-height: 39pt;
@@ -66,13 +68,13 @@ img#nums.num1 {
 }
 
 #dropdowntext {
-    margin-top: 5%;
+    margin-top: 7%;
     text-align: right;
-    font-size: 1em;
+    font-size: 1.25em;
 }
 
 #lowerText {
-    padding-top: 1.5em;
+    padding-top: 12%;
 }
 
 #roulette {
