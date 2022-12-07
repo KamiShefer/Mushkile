@@ -1,13 +1,17 @@
-// If autoplay doesn't work - Install edge, go to browser settings and change autoplay to allowed.
-// This can also be done directly via prefs in Chrome.
-
-const VIDEO_LOCATION = String.raw`vids-tryout`;
+const VIDEO_LOCATION = String.raw`vids-split`;
 const VIDEOS_PER_CATEGORY = 3;
 const AMOUNT_OF_CATEGORIES = 4;
 
+const SUB_VIDEOS_CATEGORIES = {
+    0: [2, 2, 2],
+    1: [3, 2, 2],
+    2: [3, 3, 2],
+    3: [5, 4, 4]
+}
+
 VIDEO_LENGTHS_IN_MILLISECONDS = [
-    [53760, 59989, 75690],
-    [48661, 73087, 104000],
-    [53632, 82261, 107920],
-    [128100, 147020, 185250],
+    [75690, 59989, 53760],
+    [104000, 73087, 48661],
+    [107920, 82261, 53632],
+    [185250, 147020, 128100185250],
 ]

@@ -5,13 +5,6 @@ let first_run = true;
 let pre_click_gif = new SuperGif({gif: document.getElementById("start_button_unclicked_gif"), loop_mode: true, on_end: unClickedGifLoopEnd});
 let clicked_gif = new SuperGif({gif: document.getElementById("start_button_clicked_gif"), loop_mode: false, on_end: buttonClickedAnimationDone});
 
-// let VIDEO_URLS = [
-//     ["https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01"],
-//     ["https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01"],
-//     ["https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01"],
-//     ["https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01", "https://fast.wistia.com/embed/medias/zsdnqghg01"],
-// ]
-
 function formatTime(timeRepr) {
     timeRepr = timeRepr.toString();
     if (timeRepr.length >= 2) {
@@ -53,14 +46,14 @@ function getVideoNumber(index) {
     return selected_vids[index];
 }
 
-function getVideoPath(index) {
-    return VIDEO_LOCATION + "\\" + index + "-" + getVideoNumber(index) + ".mp4";
-    // return VIDEO_URLS[index][getVideoNumber(index)];
+function getVideoPath(index, sub_index) {
+    sub_index++; // Off by one.
+    return VIDEO_LOCATION + "\\" + getVideoNumber(index) + "_" + index + "(" + sub_index + ").mp4";
 }
 
 function resetSelectedVids() {
     if (first_run) {
-        selected_vids = [VIDEOS_PER_CATEGORY-1,VIDEOS_PER_CATEGORY-1,VIDEOS_PER_CATEGORY-1,VIDEOS_PER_CATEGORY-1];
+        selected_vids = [0,0,0,0];
         first_run = false;
     } else {
         // Random: See https://www.w3schools.com/js/js_random.asp
@@ -109,25 +102,36 @@ function makeTypingSound(callback) {
 function setupVideos() {
     resetSelectedVids();
     for (let vid_index = 0; vid_index < AMOUNT_OF_CATEGORIES; vid_index++) {
-        toggleDivDisplay("vid" + vid_index, hidden = true);
-        let vid = document.getElementById("vid" + vid_index);
-        let selected_video = getVideoPath(vid_index);
-        console.log("index is " + vid_index)
-        console.log("setting video from path " + selected_video);
-        vid.src = selected_video;
-        vid.onended = onVideoEnds;
-        vid.preload = "auto";
+        for (let sub_vid_index = 0; sub_vid_index < SUB_VIDEOS_CATEGORIES[vid_index][getVideoNumber(vid_index)]; sub_vid_index++) {
+            let vid_css_selector = "vid"+vid_index+"_"+sub_vid_index;
+            let vid = document.getElementById(vid_css_selector);
+            let selected_video = getVideoPath(vid_index, sub_vid_index);
+            console.log("index is " + vid_index + ", sub index is: " + sub_vid_index);
+            console.log("setting video from path " + selected_video);
+            console.log("vid css selector is " + vid_css_selector)
+            vid.src = selected_video;
+            vid.onended = onVideoEnds;
+            vid.preload = "auto";
+        }
     }
 }
 
 function onVideoEnds(event) {
     index = event.srcElement.id[3];
-    console.log('video ' + index + ' ended.');
-    toggleDivDisplay("vid" + index, hidden = true);
+    sub_index = event.srcElement.id[5];
+    console.log('video ' + event.srcElement.id + ' ended.');
+    toggleDivDisplay(event.srcElement.id, hidden = true);
+    sub_index++;
+    if (sub_index < SUB_VIDEOS_CATEGORIES[index][getVideoNumber(index)]) {
+        let sub_vid_css_selector = "vid"+index+"_"+sub_index;
+        toggleDivDisplay(sub_vid_css_selector, hidden = false);
+        document.getElementById(sub_vid_css_selector).play();
+        return;
+    }
     index++;
     if (index < AMOUNT_OF_CATEGORIES) {
-        toggleDivDisplay("vid" + index, hidden = false);
-        document.getElementById("vid" + index).play();
+        toggleDivDisplay("vid" + index+"_0", hidden = false);
+        document.getElementById("vid" + index+"_0").play();
     } else {
         console.log("done");
         clearInterval(timer_interval_id);
@@ -192,8 +196,8 @@ function mainOpener() {
 }
 
 function mainVideo() {
-    toggleDivDisplay('vid0', hidden = false);
-    video = document.getElementById('vid0');
+    toggleDivDisplay('vid0_0', hidden = false);
+    video = document.getElementById('vid0_0');
     video.muted = false;
     video.play();
 }
@@ -313,7 +317,7 @@ function startVideos() {
 function main() {
     console.log("main started");
     setupVideos();
-    document.getElementById("vid0").addEventListener("canplaythrough", () => { preMain(); });
+    document.getElementById("vid0_0").addEventListener("canplaythrough", () => { preMain(); });
 }
 
 main();
