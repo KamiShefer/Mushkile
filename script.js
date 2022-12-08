@@ -114,6 +114,7 @@ function setupVideos() {
             vid.onended = onVideoEnds;
             vid.preload = "auto";
         }
+    }
     phase_ = PHASES.PRE_MAIN;
     // Originally, we waited for video to load. When hosted, it caused some issues. 
     // Since gif loading takes time anyways - decided not to wait for it.}
