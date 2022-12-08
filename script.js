@@ -102,7 +102,6 @@ function makeTypingSound(callback) {
 
 function setupVideos() {
     resetSelectedVids();
-    phase_ = PHASES.PRE_MAIN;
     for (let vid_index = 0; vid_index < AMOUNT_OF_CATEGORIES; vid_index++) {
         for (let sub_vid_index = 0; sub_vid_index < SUB_VIDEOS_CATEGORIES[vid_index][getVideoNumber(vid_index)]; sub_vid_index++) {
             let vid_css_selector = "vid"+vid_index+"_"+sub_vid_index;
@@ -115,7 +114,10 @@ function setupVideos() {
             vid.onended = onVideoEnds;
             vid.preload = "auto";
         }
-    }
+    phase_ = PHASES.PRE_MAIN;
+    // Originally, we waited for video to load. When hosted, it caused some issues. 
+    // Since gif loading takes time anyways - decided not to wait for it.}
+    preMain();
 }
 
 function onVideoEnds(event) {
@@ -328,7 +330,6 @@ function startVideos() {
 function main() {
     console.log("main started");
     setupVideos();
-    document.getElementById("vid0_0").addEventListener("canplaythrough", () => { preMain(); });
 }
 
 main();
