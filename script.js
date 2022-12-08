@@ -4,6 +4,7 @@ let interval_stop_value;
 let first_run = true;
 let pre_click_gif = new SuperGif({gif: document.getElementById("start_button_unclicked_gif"), loop_mode: true, on_end: unClickedGifLoopEnd});
 let clicked_gif = new SuperGif({gif: document.getElementById("start_button_clicked_gif"), loop_mode: false, on_end: buttonClickedAnimationDone});
+let phase_ = PHASES.INIT;
 
 function formatTime(timeRepr) {
     timeRepr = timeRepr.toString();
@@ -101,6 +102,7 @@ function makeTypingSound(callback) {
 
 function setupVideos() {
     resetSelectedVids();
+    phase_ = PHASES.PRE_MAIN;
     for (let vid_index = 0; vid_index < AMOUNT_OF_CATEGORIES; vid_index++) {
         for (let sub_vid_index = 0; sub_vid_index < SUB_VIDEOS_CATEGORIES[vid_index][getVideoNumber(vid_index)]; sub_vid_index++) {
             let vid_css_selector = "vid"+vid_index+"_"+sub_vid_index;
@@ -141,6 +143,12 @@ function onVideoEnds(event) {
 }
 
 function preMain() {
+    if (phase_ != PHASES.PRE_MAIN) {
+        console.warn("pre main called in wrong phase");
+        return;
+    } else {
+        console.log("pre main starts in correct phase");
+    }
     if (pre_click_gif.get_canvas() === undefined) {
     pre_click_gif.load(() => {
         console.log("pre click gif loaded")
@@ -159,6 +167,7 @@ function preMain() {
         pre_click_gif.move_to(0);
         clicked_gif.move_to(0);
         pre_click_gif.play();
+        console.log("showing pre-loaded button gif");
         toggleDivDisplay("start_button_unclicked", false);
         toggleDivDisplay("start_button_clicked", true);
         toggleDivDisplay("start_button_div", false)
@@ -187,6 +196,7 @@ function buttonClickedAnimationDone() {
     toggleDivDisplay("start_button_clicked", true);
     toggleDivDisplay("start_button_div", true);
     document.querySelector("body").requestFullscreen();
+    phase_ = PHASES.ROULETTE;
     mainOpener();
 }
 
@@ -307,6 +317,7 @@ function rouletteMain(endCallback) {
 function startVideos() {
     setTimeout(() => {
         toggleDivDisplay("opener", hidden = true);
+        phase_ = PHASES.MOVIE;
         mainVideo();
         startTimer();
         clearOpenerTexts();
