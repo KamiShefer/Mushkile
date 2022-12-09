@@ -55,7 +55,6 @@ function getVideoPath(index, sub_index) {
 function resetSelectedVids() {
     if (first_run) {
         selected_vids = [0,0,0,0];
-        first_run = false;
     } else {
         // Random: See https://www.w3schools.com/js/js_random.asp
         for (let index = 0; index < selected_vids.length; index++) {
@@ -120,6 +119,7 @@ function setupVideos() {
         // Originally, we waited for video to load. When hosted, it caused some issues. 
         // Since gif loading takes time anyways - decided not to wait for it.}
         preMain();
+        first_run = false;
     } else {
         phase_ = PHASES.ROULETTE;
         mainOpener();
